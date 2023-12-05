@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/listLayout">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/artist_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        tools:context=".ArtistListFragment" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:contentDescription="Add"
+        android:src="@android:drawable/ic_menu_add" />
+
+    <TextView
+        android:id="@+id/textViewEmpty"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_marginTop="20dp"
+        android:minHeight="48dp"
+        android:text="¡Empieza añadiendo un nuevo artista!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/add_icon"
+        android:layout_width="75dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center|center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="TextViewEmpty"
+        android:visibility="gone"
+        app:srcCompat="@drawable/baseline_music_note_24" />
+
+    <ImageView
+        android:id="@+id/arrow_icon"
+        android:layout_width="78dp"
+        android:layout_height="62dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="TextViewEmpty"
+        android:visibility="gone"
+        app:srcCompat="@drawable/baseline_arrow_right_alt_24" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:visibility="gone" />
+
+</FrameLayout>

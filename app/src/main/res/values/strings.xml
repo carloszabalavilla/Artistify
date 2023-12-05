@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Artistify</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="image_view">image view</string>
+    <string name="artist_name">Artist Name</string>
+    <string name="canciones_del_artista">Canciones del artista</string>
+    <string name="song">song</string>
+    <string name="a_adir">Añadir</string>
+    <string name="artist">artist</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="buscar">Buscar</string>
+    <string name="nombre_del_artista">Nombre del artista</string>
+</resources>

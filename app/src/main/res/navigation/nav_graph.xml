@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/artistListFragment">
+
+    <fragment
+        android:id="@+id/artistListFragment"
+        android:name="com.czabala.miproyecto.fragments.ArtistListFragment"
+        android:label="ArtistListFragment" >
+        <action
+            android:id="@+id/action_artistListFragment_to_artistDetailFragment"
+            app:destination="@id/artistDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_artistListFragment_to_newArtistFragment"
+            app:destination="@id/newArtistFragment"
+            app:enterAnim="@animator/nav_default_enter_anim"
+            app:exitAnim="@animator/nav_default_exit_anim"
+            app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+            app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/artistDetailFragment"
+        android:name="com.czabala.miproyecto.fragments.ArtistDetailFragment"
+        android:label="ArtistDetailFragment" />
+    <fragment
+        android:id="@+id/newArtistFragment"
+        android:name="com.czabala.miproyecto.fragments.NewArtistFragment"
+        android:label="fragment_new_artist"
+        tools:layout="@layout/fragment_new_artist" />
+</navigation>

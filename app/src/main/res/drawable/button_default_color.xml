@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#4AC4E3" />
+    <!-- Otros atributos de color para el estado predeterminado -->
+</shape>
