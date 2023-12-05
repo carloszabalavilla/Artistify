@@ -10,7 +10,7 @@ object RemoteConnection {
         private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("X-RapidAPI-Key", "c9ad19f8d2msh106e30b0f704818p1d9a30jsne42b208148da")
+                    .addHeader("X-RapidAPI-Key", "ad2c6846c7mshda07506537f3797p1a0824jsn0a4b55c4a034") //Tiene un uso máximo
                     .addHeader("X-RapidAPI-Host", "spotify23.p.rapidapi.com")
                     .build()
                 chain.proceed(request)
