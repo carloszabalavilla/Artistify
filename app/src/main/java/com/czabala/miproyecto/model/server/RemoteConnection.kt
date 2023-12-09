@@ -24,4 +24,5 @@ object RemoteConnection {
             .build()
 
         val spotifyService: SpotifyApiService = retrofit.create(SpotifyApiService::class.java)
+
 }
