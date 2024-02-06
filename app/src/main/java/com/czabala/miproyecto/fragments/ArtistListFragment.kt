@@ -1,5 +1,7 @@
 package com.czabala.miproyecto.fragments
 
+import android.app.DownloadManager.COLUMN_ID
+import android.content.ContentValues
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.adapters.ArtistAdapter
 import com.czabala.miproyecto.databinding.FragmentArtistListBinding
+import com.czabala.miproyecto.model.db.DatabaseHelper
 import com.czabala.miproyecto.model.server.artist.Artist
 import com.czabala.miproyecto.viewmodels.ArtistViewModel
 import kotlinx.coroutines.Dispatchers
@@ -75,6 +78,17 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
                 binding.textViewEmpty.visibility = View.GONE
             }
         }
+        /*val dbHelper = DatabaseHelper(requireContext())
+        val db = dbHelper.writableDatabase
+
+        val values = ContentValues()
+        values.put(dbHelper.getColumnName(), it[0].name)
+
+        val newRowId = db.insert(dbHelper.getTableName(), null, values)
+
+        // Cierra la base de datos cuando hayas terminado
+        db.close()*/
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

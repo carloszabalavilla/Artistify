@@ -8,4 +8,6 @@
     <color name="my_dark_secondary">#49C6D7</color>
     <color name="my_bg">#E1E1E1</color>
     <color name="buttonTextColor">#FF49C6D7</color>
+    <color name="button_default_color">#FF49C6D7</color>
+    <color name="button_pressed_color">#FF5840A1</color>
 </resources>
