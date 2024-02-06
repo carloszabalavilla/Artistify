@@ -78,3 +78,4 @@ class ArtistViewModel : ViewModel() {
         artistChanged.postValue(true)
     }
 }
+

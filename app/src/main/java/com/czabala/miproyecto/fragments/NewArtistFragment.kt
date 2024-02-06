@@ -22,7 +22,6 @@ import kotlinx.coroutines.withContext
 
 class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: ArtistViewModel by activityViewModels()

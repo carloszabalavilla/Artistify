@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "907770388102",
+    "project_id": "artistify-2f2fd",
+    "storage_bucket": "artistify-2f2fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907770388102:android:a13da4af3d01bd7ee83b07",
+        "android_client_info": {
+          "package_name": "com.czabala.miproyecto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907770388102-5np89b203nk9c2d88ljqo4ddd1q9unj8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.czabala.miproyecto",
+            "certificate_hash": "64eef253286fd7d284247736ae348ffac2659e34"
+          }
+        },
+        {
+          "client_id": "907770388102-l6cj3samnvk4c6aq3duiluace1if25lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQvpM5Ylitw7VOMkZPfrnlP14xjWMb1Qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907770388102-l6cj3samnvk4c6aq3duiluace1if25lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
