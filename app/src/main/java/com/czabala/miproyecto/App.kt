@@ -1,19 +1,11 @@
 package com.czabala.miproyecto
 
 import android.app.Application
-import androidx.room.Room
-import com.czabala.miproyecto.model.db.ArtistDatabase
-import com.pjurado.firebase2324.core.AuthManager
-import com.pjurado.firebase2324.core.FirestoreManager
+import com.czabala.miproyecto.core.AuthManager
+import com.czabala.miproyecto.core.FirestoreManager
+
 
 class App: Application() {
-    /*lateinit var db: ArtistDatabase
-    override fun onCreate() {
-        super.onCreate()
-        db = Room
-            .databaseBuilder(this,ArtistDatabase::class.java,"Artist-db")
-            .build()
-    }*/
     lateinit var auth: AuthManager
     lateinit var firestore: FirestoreManager
 
@@ -22,5 +14,4 @@ class App: Application() {
         auth = AuthManager(this)
         firestore = FirestoreManager(this)
     }
-
 }

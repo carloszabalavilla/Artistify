@@ -1,37 +1,36 @@
-package com.pjurado.firebase2324.core
+package com.czabala.miproyecto.core
 
-import android.app.Application
 import android.content.Context
+import com.czabala.miproyecto.App
+import com.czabala.miproyecto.model.server.artist.Artist
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pjurado.firebase2324.App
-import com.pjurado.firebase2324.model.Note
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-
 class FirestoreManager(context: Context) {
     val firestore = FirebaseFirestore.getInstance()
     val auth = (context.applicationContext as App).auth
     val userId = auth.getCurrentUser()?.uid
-    val COLECCION = "notas"
+    val COLLECTION = "artists"
 
-    suspend fun addNote(note: Note){
-        note.id =userId.toString()
-        firestore.collection(COLECCION).add(note).await()
+    suspend fun getArtistById(artistId: String): Artist? {
+        val artistRef = firestore.collection(COLLECTION).document(artistId).get().await()
+        return artistRef.toObject(Artist::class.java)
     }
 
-    suspend fun updateNote(note: Note) {
-        val noteRef = note.id?.let {
-            firestore.collection("notes").document(it)
+    suspend fun addArtist(artist: Artist){
+        firestore.collection(COLLECTION).add(artist).await()
+    }
+
+    suspend fun updateNote(artist: Artist) {
+        val artistRef = artist.id?.let {
+            firestore.collection(COLLECTION).document(it)
         }
-        noteRef?.set(note)?.await()
+        artistRef?.set(artist)?.await()
     }
 
-    suspend fun deleteNoteById(noteId: String) {
-        firestore.collection("notes").document(noteId).delete().await()
+    suspend fun deleteNoteById(artistId: String) {
+        firestore.collection(COLLECTION).document(artistId).delete().await()
     }
-
+/*
     fun getNotesFlow(): Flow<List<Note>> = callbackFlow {
         val notesRef = firestore.collection("notes")
             .whereEqualTo("userId", userId)
@@ -53,4 +52,5 @@ class FirestoreManager(context: Context) {
         }
         awaitClose { subscription.remove() }
     }
+ */
 }

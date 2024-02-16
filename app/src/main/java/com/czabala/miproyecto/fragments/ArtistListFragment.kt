@@ -17,7 +17,6 @@ import androidx.navigation.fragment.findNavController
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.adapters.ArtistAdapter
 import com.czabala.miproyecto.databinding.FragmentArtistListBinding
-import com.czabala.miproyecto.model.db.DatabaseHelper
 import com.czabala.miproyecto.model.server.artist.Artist
 import com.czabala.miproyecto.viewmodels.ArtistViewModel
 import kotlinx.coroutines.Dispatchers

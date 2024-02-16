@@ -1,5 +1,4 @@
-package com.pjurado.firebase2324.core
-
+package com.czabala.miproyecto.core
 
 import android.content.Context
 import android.content.Intent

@@ -1,50 +1,49 @@
 package com.czabala.miproyecto.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.czabala.miproyecto.App
-import com.czabala.miproyecto.R
-import com.czabala.miproyecto.databinding.ActivityCrearCuentaBinding
+import com.czabala.miproyecto.core.AuthRes
+import com.czabala.miproyecto.databinding.ActivityCreateAccountBinding
 import com.google.android.material.snackbar.Snackbar
-import com.pjurado.firebase2324.core.AuthRes
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CrearCuenta : AppCompatActivity() {
+class CreateAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityCrearCuentaBinding.inflate(layoutInflater)
+        val binding = ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
         with(binding) {
-            btnRegistrar.setOnClickListener {
-                signUp(etEmail.text.toString(), etPassword.text.toString())
+            signupButton.setOnClickListener {
+                signUp(emailField.text.toString(), passwordField.text.toString())
             }
-            tvIniciaSesion.setOnClickListener {
+            backToLogin.setOnClickListener {
                 finish()
             }
         }
     }
 
-    private fun ActivityCrearCuentaBinding.signUp(eMail: String, password: String) {
-        if (!eMail.isNullOrEmpty() && !password.isNullOrEmpty()) {
+    private fun ActivityCreateAccountBinding.signUp(eMail: String, password: String) {
+        if (eMail.isNotEmpty() && password.isNotEmpty()) {
             GlobalScope.launch {
                 when ((application as App).auth.createUserWithEmailAndPassword(
                     eMail,
                     password
-                )){
-                    is AuthRes.Success<*> -> {
+                )) {
+                    is AuthRes.Success -> {
                         Snackbar.make(root, "Usuario creado correctamente", Snackbar.LENGTH_SHORT)
                             .show()
                         finish()
                     }
+
                     is AuthRes.Error -> {
                         Snackbar.make(root, "Error al crear el usuario", Snackbar.LENGTH_SHORT)
                             .show()
                     }
                 }
             }
-        }
-        else{
+        } else {
             Snackbar.make(root, "Debes llenar todos los campos", Snackbar.LENGTH_SHORT).show()
         }
     }
