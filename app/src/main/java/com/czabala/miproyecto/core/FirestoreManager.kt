@@ -6,29 +6,29 @@ import com.czabala.miproyecto.model.server.artist.Artist
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 class FirestoreManager(context: Context) {
-    val firestore = FirebaseFirestore.getInstance()
-    val auth = (context.applicationContext as App).auth
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = (context.applicationContext as App).auth
     val userId = auth.getCurrentUser()?.uid
-    val COLLECTION = "artists"
+    private val collection = "artists"
 
     suspend fun getArtistById(artistId: String): Artist? {
-        val artistRef = firestore.collection(COLLECTION).document(artistId).get().await()
+        val artistRef = firestore.collection(collection).document(artistId).get().await()
         return artistRef.toObject(Artist::class.java)
     }
 
     suspend fun addArtist(artist: Artist){
-        firestore.collection(COLLECTION).add(artist).await()
+        firestore.collection(collection).add(artist).await()
     }
 
     suspend fun updateNote(artist: Artist) {
-        val artistRef = artist.id?.let {
-            firestore.collection(COLLECTION).document(it)
+        val artistRef = artist.id.let {
+            firestore.collection(collection).document(it)
         }
-        artistRef?.set(artist)?.await()
+        artistRef.set(artist).await()
     }
 
     suspend fun deleteNoteById(artistId: String) {
-        firestore.collection(COLLECTION).document(artistId).delete().await()
+        firestore.collection(collection).document(artistId).delete().await()
     }
 /*
     fun getNotesFlow(): Flow<List<Note>> = callbackFlow {

@@ -10,6 +10,6 @@
     android:paddingEnd="5dp"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_graph"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
 </androidx.fragment.app.FragmentContainerView>

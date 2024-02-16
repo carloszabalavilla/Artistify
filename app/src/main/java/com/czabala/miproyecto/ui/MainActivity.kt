@@ -1,7 +1,8 @@
-package com.czabala.miproyecto
+package com.czabala.miproyecto.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.czabala.miproyecto.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

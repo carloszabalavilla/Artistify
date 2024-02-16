@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import com.czabala.miproyecto.MainActivity
 import com.czabala.miproyecto.core.AuthManager
 import com.czabala.miproyecto.core.AuthRes
 import com.czabala.miproyecto.databinding.ActivityLoginBinding
@@ -73,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
 
         with(binding){
             createAccount.setOnClickListener {
-                val intent = Intent(this@LoginActivity, CrearCuenta::class.java)
+                val intent = Intent(this@LoginActivity, CreateAccountActivity::class.java)
                 startActivity(intent)
             }
 

@@ -14,13 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.ForgottenPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CreateAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.CrearCuenta"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
             android:name=".ui.LoginActivity"
