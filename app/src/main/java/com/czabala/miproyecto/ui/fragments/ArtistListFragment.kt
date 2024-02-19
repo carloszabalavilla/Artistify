@@ -54,7 +54,7 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
         findNavController().navigate(R.id.action_artistListFragment_to_artistDetailFragment)
     }
 
-    fun loadArtists(it: List<Artist>) {
+    private fun loadArtists(it: List<Artist>) {
         binding.progressBar.visibility = View.VISIBLE
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO) {

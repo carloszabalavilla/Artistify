@@ -1,13 +1,8 @@
 package com.czabala.miproyecto.core
 
-import android.content.Context
 import android.util.Log
-import com.czabala.miproyecto.App
 import com.czabala.miproyecto.model.artist.Artist
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class FirestoreManager() {

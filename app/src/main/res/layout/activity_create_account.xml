@@ -9,13 +9,13 @@
 
     <TextView
         android:id="@+id/title"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="8dp"
-        android:textSize="24sp"
-        android:text="Crear cuenta" />
+        android:gravity="center"
+        android:text="Crear cuenta"
+        android:textSize="24sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -38,8 +38,8 @@
             android:id="@+id/passwordField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Contrasena" />
+            android:hint="Contrasena"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -47,8 +47,8 @@
         android:id="@+id/signupButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
         android:layout_marginHorizontal="32dp"
+        android:layout_marginVertical="8dp"
         android:text="Registrarse" />
 
     <TextView

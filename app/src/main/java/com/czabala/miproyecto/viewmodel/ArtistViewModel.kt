@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.czabala.miproyecto.App
 import com.czabala.miproyecto.model.RemoteConnection
 import com.czabala.miproyecto.model.artist.Artist
-import com.czabala.miproyecto.model.search.Item
 import com.czabala.miproyecto.model.search.SearchResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,13 +40,13 @@ class ArtistViewModel : ViewModel() {
                 val response = withContext(Dispatchers.IO) {
                     RemoteConnection.spotifyService.getArtists(artistIds?.joinToString(",") ?: "")
                 }
+
                 if (response.isSuccessful) {
                     val remoteArtist = response.body()
                     remoteArtist?.artists?.forEach {
                         println(it.name)
                     }
                     setArtistsList(remoteArtist?.artists ?: emptyList())
-
                 } else {
                     println("No se pudo obtener la lista de artistas")
                 }
@@ -97,24 +96,25 @@ class ArtistViewModel : ViewModel() {
     suspend fun searchArtistById(artist: Artist, context: Context): Artist? {
         return (context.applicationContext as App).firestore.getArtistById(artist.id)
     }
+    /*
     suspend fun getArtistList(artistList : List<Artist>,context: Context){
         var baseList : MutableList<Artist>
         for (artist in artistList){
             searchArtistById(artist,context)?.let { baseList.add(it) }
         }
     }
+*/
 
-
-    suspend fun sendArtist(artist: Item?, context: Context): Boolean {
+    suspend fun saveArtist(artist: Artist, context: Context): Boolean {
         (context.applicationContext as App).firestore.addArtist(artist)
         return true
     }
 
-    suspend fun alterArtist(artist: Artist, context: Context){
+    suspend fun alterArtist(artist: Artist, context: Context) {
         (context.applicationContext as App).firestore.updateArtist(artist)
     }
 
-    suspend fun dropArtist(artist: Artist, context: Context){
+    suspend fun dropArtist(artist: Artist, context: Context) {
         (context.applicationContext as App).firestore.deleteArtistById(artist.id)
     }
 }

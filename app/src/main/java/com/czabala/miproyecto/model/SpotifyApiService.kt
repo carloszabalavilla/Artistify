@@ -19,6 +19,14 @@ interface SpotifyApiService {
         @Query("limit") limit: Int = 20
     ): Response<SearchResponse>
 
+    @GET("/search/")
+    suspend fun searchArtist(
+        @Query("q") query: String,
+        @Query("type") type: String = "artist",
+        @Query("offset") offset: Int = 0,
+        @Query("limit") limit: Int = 1
+    ): Response<SearchResponse>
+
     @GET("/artist_singles/")
     suspend fun getTopTracks(
         @Query("id") artistId: String,

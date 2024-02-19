@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center"
         android:layout_marginBottom="30dp"
+        android:contentDescription="@string/artist"
         android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/artist" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/artistNameView"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </androidx.cardview.widget.CardView>

@@ -174,9 +174,8 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
                             viewModel.artistList.value?.let {
                                 viewModel.artist.value?.let { artist ->
                                     viewModel.deleteArtist(artist)
-                                    if (context != null) {
-                                        viewModel.dropArtist(artist,context?
-                                    })
+                                    if (context != null)
+                                        viewModel.dropArtist(artist, context)
                                     requireActivity().runOnUiThread {
                                         Toast.makeText(
                                             requireContext(),
@@ -196,6 +195,7 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
                 alertDialog.show()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -14,8 +14,7 @@ import com.bumptech.glide.Glide
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.databinding.FragmentNewArtistBinding
 import com.czabala.miproyecto.model.RemoteConnection
-import com.czabala.miproyecto.model.search.Item
-import com.czabala.miproyecto.ui.MainActivity
+import com.czabala.miproyecto.model.artist.Artist
 import com.czabala.miproyecto.viewmodel.ArtistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,11 +29,10 @@ import kotlinx.coroutines.withContext
 class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: ArtistViewModel by activityViewModels()
-        var artist: Item? = null
+        var artist: Artist? = null
         FragmentNewArtistBinding.bind(view).apply {
             buttonSearch.setOnClickListener {
                 if (editTextName.text.toString().isEmpty()) {
@@ -46,13 +44,18 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
                             RemoteConnection.spotifyService.searchArtists(editTextName.text.toString())
                         }
                         if (artistResponse.isSuccessful) {
-                            artist = artistResponse.body()?.artists?.items?.first()
+                            artist =
+                                artistResponse.body()?.artists?.items?.first()?.data?.uri?.let {
+                                    RemoteConnection.spotifyService.getArtists(
+                                        it.substringAfterLast(":")
+                                    )
+                                }?.body()?.artists?.first()
                             if (artist != null) {
                                 addLayout.visibility = View.VISIBLE
                                 Glide.with(imageViewArtist)
-                                    .load(artist!!.data.visuals.avatarImage.sources.first().url)
+                                    .load(artist!!.images.first().url)
                                     .into(imageViewArtist)
-                                textViewArtist.text = artist!!.data.profile.name
+                                textViewArtist.text = artist!!.name
                                 Toast.makeText(
                                     requireContext(),
                                     "Artista encontrado",
@@ -86,25 +89,13 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
                         setMessage("¿Deseas añadir este artista a la lista?")
                         setPositiveButton("Sí") { dialog, which ->
                             viewModel.viewModelScope.launch {
-                                val artistResponse = withContext(Dispatchers.IO) {
-                                    val uri = artist!!.data.uri
-                                    val artistId = uri.substringAfterLast(":")
-                                    RemoteConnection.spotifyService.getArtists(artistId)
-                                }
-                                if (artistResponse.isSuccessful) {
-                                    artistResponse.body()?.artists?.let { it1 ->
-                                        viewModel.addArtistToArtistList(
-                                            it1.first()
-                                        )
-                                    }
-                                    viewModel.sendArtist(artist,context)
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Artista añadido",
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                    findNavController().popBackStack()
-                                }
+                                viewModel.saveArtist(artist!!, context)
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Artista añadido",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                findNavController().popBackStack()
                             }
                         }
                         setNegativeButton("No") { dialog, _ ->
@@ -116,14 +107,14 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
             }
         }
     }
-/*
-    @OptIn(DelicateCoroutinesApi::class)
-    suspend fun persistArtist(artist: Artist) {
-        val firestoreManager = (context?.applicationContext as App).firestore
-        GlobalScope.launch {
-            firestoreManager.addArtist(artist)
+    /*
+        @OptIn(DelicateCoroutinesApi::class)
+        suspend fun persistArtist(artist: Artist) {
+            val firestoreManager = (context?.applicationContext as App).firestore
+            GlobalScope.launch {
+                firestoreManager.addArtist(artist)
+            }
         }
-    }
-*/
+    */
 
 }
