@@ -9,8 +9,8 @@
         android:id="@+id/artistLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/artistImage"
@@ -20,8 +20,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
 
-            tools:srcCompat="@tools:sample/avatars"
-            android:contentDescription="@string/image_view" />
+            android:contentDescription="@string/image_view"
+            tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
             android:id="@+id/artistName"
@@ -64,7 +64,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="@string/canciones_del_artista"
+            android:text="Artist Songs"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -82,8 +82,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="@string/image_view" />
+                android:contentDescription="@string/image_view"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/songOne"
@@ -92,7 +92,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="15dp"
                 android:ellipsize="end"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="Artist Song One" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,8 +110,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="@string/image_view" />
+                android:contentDescription="@string/image_view"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/songTwo"
@@ -119,7 +120,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="15dp"
                 android:ellipsize="end"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:text="Artist Song Two" />
 
 
         </LinearLayout>
@@ -138,8 +140,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
-                tools:srcCompat="@tools:sample/avatars"
-                android:contentDescription="@string/image_view" />
+                android:contentDescription="@string/image_view"
+                tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/songThree"
@@ -148,7 +150,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="15dp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:text="Artist Song Three" />
         </LinearLayout>
     </LinearLayout>
 

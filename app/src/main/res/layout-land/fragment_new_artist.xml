@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="horizontal"
-    tools:context=".fragments.NewArtistFragment">
+    tools:context=".ui.fragments.NewArtistFragment">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -57,6 +57,7 @@
                 app:cornerRadius="10dp" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:id="@+id/divider"
         android:layout_width="1dp"

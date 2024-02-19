@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/artistListFragment"
-        android:name="com.czabala.miproyecto.fragments.ArtistListFragment"
-        android:label="ArtistListFragment" >
+        android:name="com.czabala.miproyecto.ui.fragments.ArtistListFragment"
+        android:label="ArtistListFragment">
         <action
             android:id="@+id/action_artistListFragment_to_artistDetailFragment"
             app:destination="@id/artistDetailFragment"
@@ -26,11 +26,11 @@
     </fragment>
     <fragment
         android:id="@+id/artistDetailFragment"
-        android:name="com.czabala.miproyecto.fragments.ArtistDetailFragment"
+        android:name="com.czabala.miproyecto.ui.fragments.ArtistDetailFragment"
         android:label="ArtistDetailFragment" />
     <fragment
         android:id="@+id/newArtistFragment"
-        android:name="com.czabala.miproyecto.fragments.NewArtistFragment"
+        android:name="com.czabala.miproyecto.ui.fragments.NewArtistFragment"
         android:label="fragment_new_artist"
         tools:layout="@layout/fragment_new_artist" />
 </navigation>

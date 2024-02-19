@@ -25,6 +25,6 @@
         android:layout_gravity="center|bottom"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
 </androidx.cardview.widget.CardView>
