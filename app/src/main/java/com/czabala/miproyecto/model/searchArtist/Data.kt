@@ -1,4 +1,4 @@
-package com.czabala.miproyecto.model.search
+package com.czabala.miproyecto.model.searchArtist
 
 data class Data(
     val profile: Profile,

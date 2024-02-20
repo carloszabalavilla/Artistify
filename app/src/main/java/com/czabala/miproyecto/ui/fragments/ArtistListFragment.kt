@@ -38,7 +38,22 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
             floatingActionButtonAdd.setOnClickListener {
                 findNavController().navigate(R.id.action_artistListFragment_to_newArtistFragment)
             }
+
+            bottomNavigationView?.setOnNavigationItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_songs -> {
+                        // Navegar al fragmento de canciones
+                        navigateToSongsFragment()
+                        true
+                    }
+                    else -> false
+                }
+            }
         }
+    }
+
+    private fun navigateToSongsFragment() {
+        findNavController().navigate(R.id.action_artistListFragment_to_songListFragment)
     }
 
     private fun navigateTo(artist: Artist) {

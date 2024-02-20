@@ -1,15 +1,14 @@
 package com.czabala.miproyecto.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.czabala.miproyecto.core.AuthManager
 import com.czabala.miproyecto.core.FirestoreManager
+import com.czabala.miproyecto.model.RemoteConnection
 import com.czabala.miproyecto.model.artist.Artist
-import com.czabala.miproyecto.model.search.SearchResponse
-import com.czabala.miproyecto.model.song.RemoteConnection
+import com.czabala.miproyecto.model.searchArtist.SearchArtistResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -38,11 +37,11 @@ class ArtistViewModel : ViewModel() {
     private fun getStandardList() {
         viewModelScope.launch {
             try {
-                val searchResponse: SearchResponse? =
+                val searchArtistResponse: SearchArtistResponse? =
                     RemoteConnection.spotifyService.searchArtists("a").body()
 
                 val artistIds =
-                    searchResponse?.artists?.items?.map { it.data.uri.substringAfterLast(":") }
+                    searchArtistResponse?.artists?.items?.map { it.data.uri.substringAfterLast(":") }
 
                 val response = withContext(Dispatchers.IO) {
                     RemoteConnection.spotifyService.getArtists(artistIds?.joinToString(",") ?: "")
@@ -107,20 +106,20 @@ class ArtistViewModel : ViewModel() {
         artistChanged.postValue(true)
     }
 
-    suspend fun searchArtistById(artist: Artist, context: Context): Artist? {
+    suspend fun searchArtistById(artist: Artist): Artist? {
         return firestore.getArtistById(artist.id)
     }
 
-    suspend fun saveArtistOnFirestore(artist: Artist, context: Context): Boolean {
+    suspend fun saveArtistOnFirestore(artist: Artist): Boolean {
         firestore.addArtist(artist)
         return true
     }
 
-    suspend fun modifyArtistOnFirestore(artist: Artist, context: Context) {
+    suspend fun modifyArtistOnFirestore(artist: Artist) {
         firestore.updateArtist(artist)
     }
 
-    suspend fun deleteArtistOnFirestore(artist: Artist, context: Context) {
+    suspend fun deleteArtistOnFirestore(artist: Artist) {
         firestore.deleteArtistById(artist.id)
     }
 }

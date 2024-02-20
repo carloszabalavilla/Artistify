@@ -1,5 +1,6 @@
 package com.czabala.miproyecto.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
@@ -9,6 +10,7 @@ import com.czabala.miproyecto.core.AuthManager
 import com.czabala.miproyecto.core.AuthRes
 import com.czabala.miproyecto.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.GoogleAuthProvider
@@ -29,6 +31,73 @@ class LoginActivity : AppCompatActivity() {
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
+        val googleSignLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            println("Result: $result")
+            if (result.resultCode == Activity.RESULT_OK) {
+                val accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    val account = accountTask.getResult(ApiException::class.java)
+                    if (account != null) {
+                        // El inicio de sesión fue exitoso
+                        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                        GlobalScope.launch {
+                            try {
+                                auth.googleSignInCredential(credential)
+                                // Inicio de sesión con credenciales de Google exitoso
+                                showSnackbar("Inicio de sesión correcto")
+                                navigateToMainActivity()
+                            } catch (e: Exception) {
+                                // Error al iniciar sesión con credenciales de Google
+                                showSnackbar("Error al iniciar sesión: ${e.message}")
+                            }
+                        }
+                    } else {
+                        // La cuenta está vacía, puede ser un problema
+                        showSnackbar("La cuenta de Google está vacía")
+                    }
+                } catch (e: ApiException) {
+                    // Error al obtener la cuenta de Google
+                    showSnackbar("Error al iniciar sesión: ${e.message}")
+                }
+            } else {
+                // El inicio de sesión fue cancelado por el usuario
+                showSnackbar("Inicio de sesión cancelado")
+            }
+        }
+
+
+
+        /*
+                val googleSignLauncher = registerForActivityResult(
+                    ActivityResultContracts.StartActivityForResult()
+                ) { result ->
+                    println("Result: $result")
+                    when (val account =
+                        auth.handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(result.data))) {
+                        is AuthRes.Success -> {
+                            val credential = GoogleAuthProvider.getCredential(account.data?.idToken, null)
+                            GlobalScope.launch {
+                                when (auth.googleSignInCredential(credential)) {
+                                    is AuthRes.Success -> {
+                                        showSnackbar("Inicio de sesión correcto")
+                                        navigateToMainActivity()
+                                    }
+
+                                    is AuthRes.Error -> {
+                                        showSnackbar("1.Error al iniciar sesión")
+                                    }
+                                }
+                            }
+                        }
+
+                        is AuthRes.Error -> {
+                            showSnackbar("2.Error al iniciar sesión")
+                        }
+                    }
+                }
+        */
         if (auth.getCurrentUser() != null) {
             navigateToMainActivity()
         }
@@ -56,10 +125,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
             googleLogin.setOnClickListener {
-                auth.signInWithGoogle(googleSignIn(), this@LoginActivity)
+                println("Google login")
+                auth.signInWithGoogle(googleSignLauncher, this@LoginActivity)
             }
         }
-
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -79,37 +148,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    @OptIn(DelicateCoroutinesApi::class)
-    private fun googleSignIn(): ActivityResultLauncher<Intent> {
-        val googleSignLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            when (val account =
-                auth.handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(result.data))) {
-                is AuthRes.Success -> {
-                    val credential = GoogleAuthProvider.getCredential(account.data?.idToken, null)
-                    GlobalScope.launch {
-                        when (auth.googleSignInCredential(credential)) {
-                            is AuthRes.Success -> {
-                                showSnackbar("Inicio de sesión correcto")
-                                navigateToMainActivity()
-                            }
-
-                            is AuthRes.Error -> {
-                                showSnackbar("Error al iniciar sesión")
-                            }
-                        }
-                    }
-                }
-
-                is AuthRes.Error -> {
-                    showSnackbar("Error al iniciar sesión")
-                }
-            }
-        }
-        return googleSignLauncher
     }
 
     private fun showSnackbar(message: String) {

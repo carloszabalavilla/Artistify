@@ -61,7 +61,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableLeft="@android:drawable/ic_menu_search"
         android:text="Inicia con Google" />
 
     <TextView

@@ -23,6 +23,11 @@
             app:exitAnim="@animator/nav_default_exit_anim"
             app:popEnterAnim="@animator/nav_default_pop_enter_anim"
             app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_artistListFragment_to_songListFragment"
+            app:destination="@id/songListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/artistDetailFragment"
@@ -33,4 +38,37 @@
         android:name="com.czabala.miproyecto.ui.fragments.NewArtistFragment"
         android:label="fragment_new_artist"
         tools:layout="@layout/fragment_new_artist" />
+    <fragment
+        android:id="@+id/songDetailFragment"
+        android:name="com.czabala.miproyecto.ui.fragments.SongDetailFragment"
+        android:label="SongDetailFragment" />
+    <fragment
+        android:id="@+id/songListFragment"
+        android:name="com.czabala.miproyecto.ui.fragments.SongListFragment"
+        android:label="SongListFragment">
+        <action
+            android:id="@+id/action_songListFragment_to_songDetailFragment"
+            app:destination="@id/songDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_songListFragment_to_newSongFragment"
+            app:destination="@id/newSongFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_songListFragment_to_artistListFragment"
+            app:destination="@id/artistListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/newSongFragment"
+        android:name="com.czabala.miproyecto.ui.fragments.NewSongFragment"
+        android:label="fragment_new_song"
+        tools:layout="@layout/fragment_new_song" />
 </navigation>

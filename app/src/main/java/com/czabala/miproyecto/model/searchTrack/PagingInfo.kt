@@ -1,4 +1,4 @@
-package com.czabala.miproyecto.model.search
+package com.czabala.miproyecto.model.searchTrack
 
 data class PagingInfo(
     val limit: Int,

@@ -18,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="20dp"
         android:clickable="true"
         android:contentDescription="Add"
         android:src="@android:drawable/ic_menu_add" />
@@ -51,8 +52,8 @@
         android:layout_width="78dp"
         android:layout_height="62dp"
         android:layout_gravity="bottom|end"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginBottom="70dp"
         android:contentDescription="TextViewEmpty"
         android:visibility="gone"
         app:srcCompat="@drawable/baseline_arrow_right_alt_24" />
@@ -64,5 +65,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal"
         android:visibility="gone" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        android:layout_gravity="bottom"/>
 
 </FrameLayout>

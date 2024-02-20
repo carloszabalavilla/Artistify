@@ -1,6 +1,5 @@
 package com.czabala.miproyecto.ui.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,7 +16,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.databinding.FragmentArtistDetailBinding
-import com.czabala.miproyecto.model.song.RemoteConnection
+import com.czabala.miproyecto.model.RemoteConnection
+import com.czabala.miproyecto.model.artist.Artist
 import com.czabala.miproyecto.viewmodel.ArtistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,9 +25,10 @@ import kotlinx.coroutines.withContext
 
 class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
     private val viewModel: ArtistViewModel by activityViewModels()
-    private val context: Context? = getContext()
+    private lateinit var artist: Artist
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        activity?.invalidateOptionsMenu()
         setHasOptionsMenu(true)
     }
 
@@ -35,6 +36,7 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
         super.onViewCreated(view, savedInstanceState)
         FragmentArtistDetailBinding.bind(view).apply {
             viewModel.artist.observe(viewLifecycleOwner) {
+                artist = it
                 artistName.text = it.name
                 Glide.with(artistImage)
                     .load(it.images.first().url)
@@ -156,7 +158,7 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_artist_list, menu)
+        inflater.inflate(R.menu.menu_detail, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -167,24 +169,18 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
                 val alertDialog = AlertDialog.Builder(requireContext())
                 alertDialog.setTitle("Confirmar acción")
                 alertDialog.setMessage("¿Estás seguro de que quieres eliminar este artista?")
-
                 alertDialog.setPositiveButton("Sí") { _, _ ->
                     viewModel.viewModelScope.launch {
                         withContext(Dispatchers.IO) {
-                            viewModel.artistList.value?.let {
-                                viewModel.artist.value?.let { artist ->
-                                    viewModel.removeArtist(artist)
-                                    if (context != null)
-                                        viewModel.deleteArtistOnFirestore(artist, context)
-                                    requireActivity().runOnUiThread {
-                                        Toast.makeText(
-                                            requireContext(),
-                                            "Artista eliminado",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        findNavController().popBackStack()
-                                    }
-                                }
+                            viewModel.removeArtist(artist)
+                            viewModel.deleteArtistOnFirestore(artist)
+                            requireActivity().runOnUiThread {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Artista eliminado",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                findNavController().popBackStack()
                             }
                         }
                     }
