@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.databinding.FragmentNewArtistBinding
-import com.czabala.miproyecto.model.RemoteConnection
 import com.czabala.miproyecto.model.artist.Artist
+import com.czabala.miproyecto.model.song.RemoteConnection
 import com.czabala.miproyecto.viewmodel.ArtistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -89,7 +89,8 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
                         setMessage("¿Deseas añadir este artista a la lista?")
                         setPositiveButton("Sí") { dialog, which ->
                             viewModel.viewModelScope.launch {
-                                viewModel.saveArtist(artist!!, context)
+                                viewModel.addArtistToArtistsList(artist!!)
+                                viewModel.saveArtistOnFirestore(artist!!, context)
                                 Toast.makeText(
                                     requireContext(),
                                     "Artista añadido",
@@ -107,14 +108,4 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
             }
         }
     }
-    /*
-        @OptIn(DelicateCoroutinesApi::class)
-        suspend fun persistArtist(artist: Artist) {
-            val firestoreManager = (context?.applicationContext as App).firestore
-            GlobalScope.launch {
-                firestoreManager.addArtist(artist)
-            }
-        }
-    */
-
 }

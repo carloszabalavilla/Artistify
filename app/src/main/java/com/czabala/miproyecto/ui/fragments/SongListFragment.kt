@@ -1,60 +1,72 @@
 package com.czabala.miproyecto.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.czabala.miproyecto.R
+import com.czabala.miproyecto.adapter.ArtistAdapter
+import com.czabala.miproyecto.databinding.FragmentSongListBinding
+import com.czabala.miproyecto.model.artist.Artist
+import com.czabala.miproyecto.viewmodel.ArtistViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SongListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SongListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentSongListBinding
+    private val adapter = ArtistAdapter { artist ->
+        navigateTo(artist)
+    }
+    private val viewModel: ArtistViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
+        binding = FragmentSongListBinding.bind(view).apply {
+            songListRecyclerView.adapter = adapter
+            viewModel.artistList.observe(viewLifecycleOwner) {
+                if (viewModel.artistChanged.value == true || adapter.itemCount == 0) {
+                    loadArtists(it)
+                }
+            }
+            floatingActionButtonAdd.setOnClickListener {
+                findNavController().navigate(R.id.action_artistListFragment_to_newArtistFragment)
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_song_list2, container, false)
+    private fun navigateTo(artist: Artist) {
+        viewModel.setArtist(artist)
+        findNavController().navigate(R.id.action_artistListFragment_to_artistDetailFragment)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SongListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SongListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    @OptIn(DelicateCoroutinesApi::class)
+    @SuppressLint("NotifyDataSetChanged")
+    private fun loadArtists(it: List<Artist>) {
+        binding.progressBar.visibility = View.VISIBLE
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                Thread.sleep(1000)
+                adapter.artists = it
             }
+            adapter.notifyDataSetChanged()
+            viewModel.artistChanged.postValue(false)
+            binding.progressBar.visibility = View.GONE
+            if (it.isEmpty()) {
+                binding.addIcon.visibility = View.VISIBLE
+                binding.arrowIcon.visibility = View.VISIBLE
+                binding.textViewEmpty.visibility = View.VISIBLE
+            } else {
+                binding.addIcon.visibility = View.GONE
+                binding.arrowIcon.visibility = View.GONE
+                binding.textViewEmpty.visibility = View.GONE
+            }
+        }
     }
 }

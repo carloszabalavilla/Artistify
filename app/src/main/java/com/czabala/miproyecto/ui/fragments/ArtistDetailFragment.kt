@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.databinding.FragmentArtistDetailBinding
-import com.czabala.miproyecto.model.RemoteConnection
+import com.czabala.miproyecto.model.song.RemoteConnection
 import com.czabala.miproyecto.viewmodel.ArtistViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -156,7 +156,7 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_artist_detail, menu)
+        inflater.inflate(R.menu.menu_artist_list, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -173,9 +173,9 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
                         withContext(Dispatchers.IO) {
                             viewModel.artistList.value?.let {
                                 viewModel.artist.value?.let { artist ->
-                                    viewModel.deleteArtist(artist)
+                                    viewModel.removeArtist(artist)
                                     if (context != null)
-                                        viewModel.dropArtist(artist, context)
+                                        viewModel.deleteArtistOnFirestore(artist, context)
                                     requireActivity().runOnUiThread {
                                         Toast.makeText(
                                             requireContext(),

@@ -1,21 +1,17 @@
 package com.czabala.miproyecto.ui.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.czabala.miproyecto.R
 import com.czabala.miproyecto.adapter.ArtistAdapter
 import com.czabala.miproyecto.databinding.FragmentArtistListBinding
 import com.czabala.miproyecto.model.artist.Artist
 import com.czabala.miproyecto.viewmodel.ArtistViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -28,13 +24,9 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
     }
     private val viewModel: ArtistViewModel by activityViewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         binding = FragmentArtistListBinding.bind(view).apply {
             artistListRecyclerView.adapter = adapter
@@ -54,6 +46,8 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
         findNavController().navigate(R.id.action_artistListFragment_to_artistDetailFragment)
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadArtists(it: List<Artist>) {
         binding.progressBar.visibility = View.VISIBLE
         GlobalScope.launch(Dispatchers.Main) {
@@ -73,46 +67,6 @@ class ArtistListFragment : Fragment(R.layout.fragment_artist_list) {
                 binding.arrowIcon.visibility = View.GONE
                 binding.textViewEmpty.visibility = View.GONE
             }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_artist_detail, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_delete -> {
-                val alertDialog = AlertDialog.Builder(requireContext())
-                alertDialog.setTitle("Confirmar acción")
-                alertDialog.setMessage("¿Estás seguro de que quieres eliminar todos los artistas?")
-
-                alertDialog.setPositiveButton("Sí") { _, _ ->
-                    viewModel.viewModelScope.launch {
-                        withContext(Dispatchers.IO) {
-                            viewModel.artistList.value?.let {
-                                viewModel.deleteAllArtists()
-                                requireActivity().runOnUiThread {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "Artistas eliminados",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    loadArtists(emptyList())
-                                }
-                            }
-                        }
-                    }
-                }
-                alertDialog.setNegativeButton("No") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                alertDialog.show()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
         }
     }
 }

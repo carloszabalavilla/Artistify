@@ -1,4 +1,4 @@
-package com.czabala.miproyecto.model
+package com.czabala.miproyecto.model.song
 
 import com.czabala.miproyecto.model.artist.ArtistResponse
 import com.czabala.miproyecto.model.search.SearchResponse

@@ -1,4 +1,4 @@
-package com.czabala.miproyecto.model
+package com.czabala.miproyecto.model.song
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

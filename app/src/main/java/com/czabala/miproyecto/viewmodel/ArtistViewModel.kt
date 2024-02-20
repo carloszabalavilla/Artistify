@@ -5,21 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.czabala.miproyecto.App
-import com.czabala.miproyecto.model.RemoteConnection
+import com.czabala.miproyecto.core.AuthManager
+import com.czabala.miproyecto.core.FirestoreManager
 import com.czabala.miproyecto.model.artist.Artist
 import com.czabala.miproyecto.model.search.SearchResponse
+import com.czabala.miproyecto.model.song.RemoteConnection
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-/*
-Introducir el firestoreManager para manejar directamente un artista desde el viewmodel, a la vez que lo anade en tiempo real lo envia a la base de datos.
-Mas tarde cuando se suspenda el fragment debe recuperar lo que tiene de la base de datos(si hiciera falta)
- */
-
 class ArtistViewModel : ViewModel() {
-
+    private val firestore = FirestoreManager()
+    val auth = AuthManager()
 
     private val _artistsList = MutableLiveData<List<Artist>>()
     val artistList: LiveData<List<Artist>> get() = _artistsList
@@ -27,8 +24,18 @@ class ArtistViewModel : ViewModel() {
     val artist: LiveData<Artist> get() = _artist
     val artistChanged = MutableLiveData<Boolean>()
 
-
     init {
+        auth.getCurrentUser()?.let { firestore.setUserId(it.uid) }
+        viewModelScope.launch {
+            try {
+                getFirestoreArtistList()
+            } catch (e: Exception) {
+                println("Exception on init ViewModel: " + e.message)
+            }
+        }
+    }
+
+    private fun getStandardList() {
         viewModelScope.launch {
             try {
                 val searchResponse: SearchResponse? =
@@ -56,6 +63,18 @@ class ArtistViewModel : ViewModel() {
         }
     }
 
+    private fun getFirestoreArtistList() {
+        viewModelScope.launch {
+            try {
+                val response = firestore.getArtists()
+                setArtistsList(response)
+            } catch (e: Exception) {
+                println("Excepcion lanzada al intentar conseguir artistas en la base de datos: " + e.message)
+                e.printStackTrace()
+            }
+        }
+    }
+
     fun setArtist(artist: Artist) {
         _artist.postValue(artist)
     }
@@ -64,7 +83,7 @@ class ArtistViewModel : ViewModel() {
         _artistsList.postValue(artistsList)
     }
 
-    fun addArtistToArtistList(artist: Artist) {
+    fun addArtistToArtistsList(artist: Artist) {
         _artistsList.value?.let {
             val newList = it.toMutableList()
             newList.add(artist)
@@ -73,7 +92,7 @@ class ArtistViewModel : ViewModel() {
         artistChanged.postValue(true)
     }
 
-    fun deleteArtist(artist: Artist) {
+    fun removeArtist(artist: Artist) {
         _artistsList.value?.let {
             val newList = it.toMutableList()
             newList.remove(artist)
@@ -83,39 +102,26 @@ class ArtistViewModel : ViewModel() {
         artistChanged.postValue(true)
     }
 
-    fun deleteAllArtists() {
+    fun removeAllArtists() {
         _artistsList.postValue(emptyList())
         artistChanged.postValue(true)
     }
 
-    //retornaria true si la respuesta es correcta? especificar los tipos de repuesta
-    // que podria dar la funcion que llama a firestore, no solo respuesta correcta
-    // e incorrecta
-    // Pasar de item a artist
-
     suspend fun searchArtistById(artist: Artist, context: Context): Artist? {
-        return (context.applicationContext as App).firestore.getArtistById(artist.id)
+        return firestore.getArtistById(artist.id)
     }
-    /*
-    suspend fun getArtistList(artistList : List<Artist>,context: Context){
-        var baseList : MutableList<Artist>
-        for (artist in artistList){
-            searchArtistById(artist,context)?.let { baseList.add(it) }
-        }
-    }
-*/
 
-    suspend fun saveArtist(artist: Artist, context: Context): Boolean {
-        (context.applicationContext as App).firestore.addArtist(artist)
+    suspend fun saveArtistOnFirestore(artist: Artist, context: Context): Boolean {
+        firestore.addArtist(artist)
         return true
     }
 
-    suspend fun alterArtist(artist: Artist, context: Context) {
-        (context.applicationContext as App).firestore.updateArtist(artist)
+    suspend fun modifyArtistOnFirestore(artist: Artist, context: Context) {
+        firestore.updateArtist(artist)
     }
 
-    suspend fun dropArtist(artist: Artist, context: Context) {
-        (context.applicationContext as App).firestore.deleteArtistById(artist.id)
+    suspend fun deleteArtistOnFirestore(artist: Artist, context: Context) {
+        firestore.deleteArtistById(artist.id)
     }
 }
 

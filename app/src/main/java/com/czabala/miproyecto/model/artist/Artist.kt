@@ -2,8 +2,7 @@ package com.czabala.miproyecto.model.artist
 
 
 data class Artist(
-    //@get:PropertyName("external_urls") @set:PropertyName("external_urls")
-    val external_urls: ExternalUrls, //O se pone así o no funciona
+    val external_urls: ExternalUrls,
     val followers: Followers,
     val genres: List<String>,
     val id: String,
@@ -12,4 +11,16 @@ data class Artist(
     val popularity: Int,
     val type: String,
     val uri: String
-)
+) {
+    constructor() : this(
+        ExternalUrls(""),
+        Followers("", 0),
+        emptyList(),
+        "",
+        emptyList(),
+        "",
+        0,
+        "",
+        ""
+    )
+}

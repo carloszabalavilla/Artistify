@@ -6,15 +6,11 @@ import com.czabala.miproyecto.core.FirestoreManager
 
 //Incluir un modo desarrollador donde depurar los errores o mostrarlos
 // a traves de toasta, y para activarlo ponerlo desde los 3 puntitos de la app.
+//Agregar error de sin internet, y mostrarlo en el toast.
 
 
 class App : Application() {
-    lateinit var auth: AuthManager
-    lateinit var firestore: FirestoreManager
+    val auth by lazy { AuthManager() }
+    val firestore by lazy { FirestoreManager() }
 
-    override fun onCreate() {
-        super.onCreate()
-        auth = AuthManager(this)
-        firestore = FirestoreManager()
-    }
 }

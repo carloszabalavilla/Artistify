@@ -19,6 +19,10 @@ class ForgottenPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnRecuperaContrasena.setOnClickListener {
+            if (binding.etEmail.text.toString().isEmpty()) {
+                binding.etEmail.error = "El email no puede estar vacío"
+                return@setOnClickListener
+            }
             GlobalScope.launch {
                 when ((application as App).auth.resetPassword(binding.etEmail.text.toString())) {
                     is AuthRes.Success -> {

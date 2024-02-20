@@ -18,7 +18,7 @@ import com.google.firebase.auth.auth
 import kotlinx.coroutines.tasks.await
 
 
-class AuthManager(context: Context) {
+class AuthManager {
     private val firebaseAuth: FirebaseAuth by lazy { Firebase.auth }
 
     suspend fun createUserWithEmailAndPassword(
@@ -54,19 +54,19 @@ class AuthManager(context: Context) {
         }
     }
 
-    fun signOut() {
+    fun signOut(context: Context) {
         firebaseAuth.signOut()
-        googleSignInClient.signOut()
+        googleSignInClient(context).signOut()
     }
 
     fun getCurrentUser() = firebaseAuth.currentUser
 
-    private val googleSignInClient: GoogleSignInClient by lazy {
+    fun googleSignInClient(context: Context): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        GoogleSignIn.getClient(context, gso)
+        return GoogleSignIn.getClient(context, gso)
     }
 
     fun handleSignInResult(task: Task<GoogleSignInAccount>): AuthRes<GoogleSignInAccount?> {
@@ -89,11 +89,10 @@ class AuthManager(context: Context) {
         }
     }
 
-    fun signInWithGoogle(googleSignInLauncher: ActivityResultLauncher<Intent>) {
-        val signInIntent = googleSignInClient.signInIntent
+    fun signInWithGoogle(googleSignInLauncher: ActivityResultLauncher<Intent>, context: Context) {
+        val signInIntent = googleSignInClient(context).signInIntent
         googleSignInLauncher.launch(signInIntent)
     }
-
 }
 
 sealed class AuthRes<out T> {

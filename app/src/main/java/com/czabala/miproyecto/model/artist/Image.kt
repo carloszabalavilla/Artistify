@@ -5,4 +5,6 @@ data class Image(
     val url: String,
     val width: Int
 
-)
+) {
+    constructor() : this(0, "", 0)
+}
