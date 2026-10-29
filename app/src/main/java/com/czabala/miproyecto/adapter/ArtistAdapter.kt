@@ -36,7 +36,7 @@ class ArtistAdapter(
                 }
                 artistNameView.text = artist.name
                 Glide.with(artistImageView)
-                    .load(artist.images.first().url)
+                    .load(artist.images.firstOrNull()?.url)
                     .into(artistImageView)
             }
         }

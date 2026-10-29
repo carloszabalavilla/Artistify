@@ -43,7 +43,7 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
                         }
                         if (artistResponse.isSuccessful) {
                             artist =
-                                artistResponse.body()?.artists?.items?.first()?.data?.uri?.let {
+                                artistResponse.body()?.artists?.items?.firstOrNull()?.data?.uri?.let {
                                     RemoteConnection.spotifyService.getArtists(
                                         it.substringAfterLast(":")
                                     )
@@ -51,7 +51,7 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
                             if (artist != null) {
                                 addLayout.visibility = View.VISIBLE
                                 Glide.with(imageViewArtist)
-                                    .load(artist!!.images.first().url)
+                                    .load(artist!!.images.firstOrNull()?.url)
                                     .into(imageViewArtist)
                                 textViewArtist.text = artist!!.name
                                 Toast.makeText(
@@ -87,7 +87,7 @@ class NewArtistFragment : Fragment(R.layout.fragment_new_artist) {
             buttonAdd.setOnClickListener {
                 for (i in 0 until (viewModel.artistList.value?.size ?: 0)) {
                     if (viewModel.artistList.value?.get(i)?.uri.equals(
-                            artistResponse.body()?.artists?.items?.first()?.data?.uri
+                            artistResponse.body()?.artists?.items?.firstOrNull()?.data?.uri
                         )
                     ) {
                         Toast.makeText(

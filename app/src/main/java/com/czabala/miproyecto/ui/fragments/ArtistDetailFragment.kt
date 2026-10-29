@@ -39,7 +39,7 @@ class ArtistDetailFragment : Fragment(R.layout.fragment_artist_detail) {
                 artist = it
                 artistName.text = it.name
                 Glide.with(artistImage)
-                    .load(it.images.first().url)
+                    .load(it.images.firstOrNull()?.url)
                     .into(artistImage)
             }
             artistLayout.setOnClickListener {
