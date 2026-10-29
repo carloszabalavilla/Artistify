@@ -1,0 +1,163 @@
+{
+  "tracks": [
+    {
+      "id": "demo-track-1",
+      "name": "Local Session",
+      "album": {
+        "album_type": "album",
+        "artists": [],
+        "external_urls": {
+          "spotify": ""
+        },
+        "id": "demo-album",
+        "images": [
+          {
+            "height": 256,
+            "width": 256,
+            "url": "DEMO_IMAGE"
+          }
+        ],
+        "is_playable": false,
+        "name": "Local Sessions",
+        "release_date": "2026-01-01",
+        "release_date_precision": "day",
+        "total_tracks": 3,
+        "type": "album",
+        "uri": "spotify:album:demo-album"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": ""
+          },
+          "id": "demo-artist-1",
+          "name": "Demo Ensemble",
+          "type": "artist",
+          "uri": "spotify:artist:demo-artist-1"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 180000,
+      "explicit": false,
+      "external_ids": {
+        "isrc": ""
+      },
+      "external_urls": {
+        "spotify": ""
+      },
+      "is_local": true,
+      "is_playable": false,
+      "popularity": 0,
+      "preview_url": "",
+      "track_number": 1,
+      "type": "track",
+      "uri": "spotify:track:demo-track-1"
+    },
+    {
+      "id": "demo-track-2",
+      "name": "Offline Melody",
+      "album": {
+        "album_type": "album",
+        "artists": [],
+        "external_urls": {
+          "spotify": ""
+        },
+        "id": "demo-album",
+        "images": [
+          {
+            "height": 256,
+            "width": 256,
+            "url": "DEMO_IMAGE"
+          }
+        ],
+        "is_playable": false,
+        "name": "Local Sessions",
+        "release_date": "2026-01-01",
+        "release_date_precision": "day",
+        "total_tracks": 3,
+        "type": "album",
+        "uri": "spotify:album:demo-album"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": ""
+          },
+          "id": "demo-artist-2",
+          "name": "Local Trio",
+          "type": "artist",
+          "uri": "spotify:artist:demo-artist-2"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 180000,
+      "explicit": false,
+      "external_ids": {
+        "isrc": ""
+      },
+      "external_urls": {
+        "spotify": ""
+      },
+      "is_local": true,
+      "is_playable": false,
+      "popularity": 0,
+      "preview_url": "",
+      "track_number": 2,
+      "type": "track",
+      "uri": "spotify:track:demo-track-2"
+    },
+    {
+      "id": "demo-track-3",
+      "name": "Sample Rhythm",
+      "album": {
+        "album_type": "album",
+        "artists": [],
+        "external_urls": {
+          "spotify": ""
+        },
+        "id": "demo-album",
+        "images": [
+          {
+            "height": 256,
+            "width": 256,
+            "url": "DEMO_IMAGE"
+          }
+        ],
+        "is_playable": false,
+        "name": "Local Sessions",
+        "release_date": "2026-01-01",
+        "release_date_precision": "day",
+        "total_tracks": 3,
+        "type": "album",
+        "uri": "spotify:album:demo-album"
+      },
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": ""
+          },
+          "id": "demo-artist-3",
+          "name": "Sample Quartet",
+          "type": "artist",
+          "uri": "spotify:artist:demo-artist-3"
+        }
+      ],
+      "disc_number": 1,
+      "duration_ms": 180000,
+      "explicit": false,
+      "external_ids": {
+        "isrc": ""
+      },
+      "external_urls": {
+        "spotify": ""
+      },
+      "is_local": true,
+      "is_playable": false,
+      "popularity": 0,
+      "preview_url": "",
+      "track_number": 3,
+      "type": "track",
+      "uri": "spotify:track:demo-track-3"
+    }
+  ]
+}

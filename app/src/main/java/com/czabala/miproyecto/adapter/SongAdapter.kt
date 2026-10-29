@@ -36,7 +36,7 @@ class SongAdapter(
                 }
                 songNameView.text = track.name
                 Glide.with(songImageView)
-                    .load(track.album.images.first().url)
+                    .load(track.album.images.firstOrNull()?.url)
                     .into(songImageView)
             }
         }

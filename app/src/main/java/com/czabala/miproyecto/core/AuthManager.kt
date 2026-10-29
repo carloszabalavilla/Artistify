@@ -1,5 +1,6 @@
 package com.czabala.miproyecto.core
 
+import com.czabala.miproyecto.BuildConfig
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
@@ -55,11 +56,12 @@ class AuthManager {
     }
 
     fun signOut(context: Context) {
+        if (BuildConfig.DEMO_MODE) return
         firebaseAuth.signOut()
         googleSignInClient(context).signOut()
     }
 
-    fun getCurrentUser() = firebaseAuth.currentUser
+    fun getCurrentUser() = if (BuildConfig.DEMO_MODE) null else firebaseAuth.currentUser
 
     fun googleSignInClient(context: Context): GoogleSignInClient {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

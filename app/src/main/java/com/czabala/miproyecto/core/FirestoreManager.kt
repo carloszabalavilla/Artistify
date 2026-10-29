@@ -1,5 +1,6 @@
 package com.czabala.miproyecto.core
 
+import com.czabala.miproyecto.BuildConfig
 import android.util.Log
 import com.czabala.miproyecto.model.artist.Artist
 import com.czabala.miproyecto.model.track.Track
@@ -20,16 +21,19 @@ class FirestoreManager {
     }
 
     suspend fun getArtistById(artistId: String): Artist? {
+        if (BuildConfig.DEMO_MODE) return DemoStore.artists().find { it.id == artistId }
         val artistRef = firestore.collection(artistCollection).document(artistId).get().await()
         return artistRef.toObject(Artist::class.java)
     }
 
     suspend fun getArtistByName(artistName: String): Artist? {
+        if (BuildConfig.DEMO_MODE) return DemoStore.artists().find { it.name == artistName }
         val artistRef = firestore.collection(artistCollection).document(artistName).get().await()
         return artistRef.toObject(Artist::class.java)
     }
 
     fun addArtist(artist: Artist) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.putArtist(artist)
         firestore.collection(artistCollection).document(artist.id).set(artist)
             .addOnSuccessListener {
                 Log.d("FirestoreManager", "Artist saved with ID: ${artist.id}")
@@ -39,6 +43,7 @@ class FirestoreManager {
     }
 
     suspend fun updateArtist(artist: Artist) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.putArtist(artist)
         val artistRef = artist.id.let {
             firestore.collection(artistCollection).document(it)
         }
@@ -46,6 +51,7 @@ class FirestoreManager {
     }
 
     suspend fun deleteArtistById(artistId: String) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.deleteArtist(artistId)
         try {
             Log.d("FirestoreManager", "Deleting artist with id: $artistId")
             firestore.collection(artistCollection).document(artistId).delete().await().let {
@@ -57,6 +63,7 @@ class FirestoreManager {
     }
 
     suspend fun getArtists(): List<Artist> {
+        if (BuildConfig.DEMO_MODE) return DemoStore.artists()
         return try {
             val result = firestore.collection(artistCollection).get().await()
             result.toObjects(Artist::class.java)
@@ -67,16 +74,19 @@ class FirestoreManager {
     }
 
     suspend fun getSongById(songId: String): Track? {
+        if (BuildConfig.DEMO_MODE) return DemoStore.songs().find { it.id == songId }
         val songRef = firestore.collection(songCollection).document(songId).get().await()
         return songRef.toObject(Track::class.java)
     }
 
     suspend fun getSongByName(songName: String): Track? {
+        if (BuildConfig.DEMO_MODE) return DemoStore.songs().find { it.name == songName }
         val songRef = firestore.collection(songCollection).document(songName).get().await()
         return songRef.toObject(Track::class.java)
     }
 
     fun addSong(song: Track) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.putSong(song)
         firestore.collection(songCollection).document(song.id).set(song)
             .addOnSuccessListener {
                 Log.d("FirestoreManager", "Song saved with ID: ${song.id}")
@@ -85,6 +95,7 @@ class FirestoreManager {
             }    }
 
     suspend fun updateSong(song: Track) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.putSong(song)
         val songRef = song.id.let {
             firestore.collection(songCollection).document(it)
         }
@@ -92,6 +103,7 @@ class FirestoreManager {
     }
 
     suspend fun deleteSongById(songId: String) {
+        if (BuildConfig.DEMO_MODE) return DemoStore.deleteSong(songId)
         try {
             Log.d("FirestoreManager", "Deleting song with id: $songId")
             firestore.collection(songCollection).document(songId).delete().await().let {
@@ -103,6 +115,7 @@ class FirestoreManager {
     }
 
     suspend fun getSongs(): List<Track> {
+        if (BuildConfig.DEMO_MODE) return DemoStore.songs()
         return try {
             val result = firestore.collection(songCollection).get().await()
             result.toObjects(Track::class.java)
