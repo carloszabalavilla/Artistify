@@ -21,3 +21,6 @@ En Linux/macOS: bash ./gradlew. APK en app/build/outputs/apk/demo/debug/. Las pr
 Se conserva la variante live y su flujo original. Requiere un nuevo app/google-services.json privado y propiedad Gradle RAPIDAPI_KEY. Las claves publicadas anteriormente deben sustituirse en sus proveedores; retirarlas del código no las revoca ni limpia el historial. Esta variante no está verificada en esta entrega y no se incluye una clave real en la demo.
 
 Carlos Zabala. Se conserva el historial y los recursos originales.
+
+## Presentación de la demo (02/11/2026)
+Entrada renovada con espaciado en dp, contenido desplazable y texto legible, sin cuentas externas. Compilación, pruebas y lint comprobados; no hay dispositivo Android conectado para verificar instalación e interfaz. Se mantiene la PR en borrador.
