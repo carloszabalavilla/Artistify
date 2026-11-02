@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="demo_eyebrow">TU CATÁLOGO MUSICAL</string>
+    <string name="demo_title">La música empieza\npor sus historias.</string>
+    <string name="demo_intro">Artistas, canciones y un lugar para descubrir sus detalles.</string>
+    <string name="demo_explanation">DEMO LOCAL\n\nUn catálogo ficticio que puedes consultar y editar. Los cambios se guardan en este dispositivo.\n\nFunciona sin cuenta y sin conexión.</string>
+    <string name="demo_enter">Entrar en la demo</string>
+    <string name="demo_footer">Datos ficticios · sin servicios externos · sin reproducción de audio</string>
+</resources>
