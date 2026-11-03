@@ -3,8 +3,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.kapt")
-    id("com.google.gms.google-services")
 }
+
+if (file("google-services.json").exists()) apply(plugin = "com.google.gms.google-services")
 
 android {
     namespace = "com.czabala.miproyecto"
@@ -20,6 +21,23 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    flavorDimensions += "mode"
+    productFlavors {
+        create("demo") {
+            dimension = "mode"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+            buildConfigField("boolean", "DEMO_MODE", "true")
+        }
+        create("live") {
+            dimension = "mode"
+            buildConfigField("boolean", "DEMO_MODE", "false")
+        }
+    }
+    defaultConfig {
+        val apiKey = providers.gradleProperty("RAPIDAPI_KEY").orElse("").get()
+        buildConfigField("String", "RAPIDAPI_KEY", "\"" + apiKey.replace("\\", "\\\\").replace("\"", "\\\"") + "\"")
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -38,6 +56,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 

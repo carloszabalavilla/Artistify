@@ -1,0 +1,76 @@
+{
+  "artists": [
+    {
+      "id": "demo-artist-1",
+      "name": "Demo Ensemble",
+      "external_urls": {
+        "spotify": ""
+      },
+      "followers": {
+        "href": "",
+        "total": 0
+      },
+      "genres": [
+        "Jazz"
+      ],
+      "images": [
+        {
+          "height": 256,
+          "width": 256,
+          "url": "DEMO_IMAGE"
+        }
+      ],
+      "popularity": 0,
+      "type": "artist",
+      "uri": "spotify:artist:demo-artist-1"
+    },
+    {
+      "id": "demo-artist-2",
+      "name": "Local Trio",
+      "external_urls": {
+        "spotify": ""
+      },
+      "followers": {
+        "href": "",
+        "total": 0
+      },
+      "genres": [
+        "Jazz"
+      ],
+      "images": [
+        {
+          "height": 256,
+          "width": 256,
+          "url": "DEMO_IMAGE"
+        }
+      ],
+      "popularity": 0,
+      "type": "artist",
+      "uri": "spotify:artist:demo-artist-2"
+    },
+    {
+      "id": "demo-artist-3",
+      "name": "Sample Quartet",
+      "external_urls": {
+        "spotify": ""
+      },
+      "followers": {
+        "href": "",
+        "total": 0
+      },
+      "genres": [
+        "Jazz"
+      ],
+      "images": [
+        {
+          "height": 256,
+          "width": 256,
+          "url": "DEMO_IMAGE"
+        }
+      ],
+      "popularity": 0,
+      "type": "artist",
+      "uri": "spotify:artist:demo-artist-3"
+    }
+  ]
+}

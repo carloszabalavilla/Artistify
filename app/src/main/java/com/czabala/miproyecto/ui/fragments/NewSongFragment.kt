@@ -42,7 +42,7 @@ class NewSongFragment : Fragment(R.layout.fragment_new_song) {
                         }
                         if (songResponse.isSuccessful) {
                             song =
-                                songResponse.body()?.tracks?.items?.first()?.data?.uri?.let {
+                                songResponse.body()?.tracks?.items?.firstOrNull()?.data?.uri?.let {
                                     RemoteConnection.spotifyService.getTracks(
                                         it.substringAfterLast(":")
                                     )
@@ -50,7 +50,7 @@ class NewSongFragment : Fragment(R.layout.fragment_new_song) {
                             if (song != null) {
                                 addLayout.visibility = View.VISIBLE
                                 Glide.with(imageViewSong)
-                                    .load(song!!.album.images.first().url)
+                                    .load(song!!.album.images.firstOrNull()?.url)
                                     .into(imageViewSong)
                                 textViewSong.text = song!!.name
                                 Toast.makeText(
@@ -81,7 +81,7 @@ class NewSongFragment : Fragment(R.layout.fragment_new_song) {
             buttonAdd.setOnClickListener {
                 for (i in 0 until (viewModel.songList.value?.size ?: 0)) {
                     if (viewModel.songList.value?.get(i)?.uri.equals(
-                            songResponse.body()?.tracks?.items?.first()?.data?.uri
+                            songResponse.body()?.tracks?.items?.firstOrNull()?.data?.uri
                         )
                     ) {
                         val toast = Toast.makeText(

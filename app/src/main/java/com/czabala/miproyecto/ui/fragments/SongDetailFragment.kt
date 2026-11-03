@@ -40,7 +40,7 @@ class SongDetailFragment : Fragment(R.layout.fragment_song_detail) {
                 song = it
                 songName.text = it.name
                 Glide.with(songImage)
-                    .load(it.album.images.first().url)
+                    .load(it.album.images.firstOrNull()?.url)
                     .into(songImage)
             }
             songLayout.setOnClickListener {
@@ -64,7 +64,7 @@ class SongDetailFragment : Fragment(R.layout.fragment_song_detail) {
                     view.post {
                         albumTitle.text = song.album.name
                         Glide.with(albumImage)
-                            .load(song.album.images.first().url)
+                            .load(song.album.images.firstOrNull()?.url)
                             .into(albumImage)
                     }
                     GlobalScope.launch {
